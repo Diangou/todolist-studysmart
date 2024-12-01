@@ -1,0 +1,24 @@
+/* src/styles/MiseEnPage.css */
+
+/* Styles pour le composant Title */
+.title {
+  font-weight: bold;
+  font-size: 3rem;
+  color: #000;
+  text-align: center; /* Centre le titre */
+}
+
+/* Styles pour le composant Subtitle */
+.subtitle {
+  font-size: 1.2rem;
+  color: #000000; /* Ajuste la couleur selon tes besoins */
+  text-align: center; /* Centre le sous-titre */
+  font-weight: 500;
+}
+
+/* Styles pour le composant Subtitle */
+.titlesection {
+  font-size: 1.2rem;
+  color: #000000; /* Ajuste la couleur selon tes besoins */
+  text-align: left; /* Centre le sous-titre */
+}

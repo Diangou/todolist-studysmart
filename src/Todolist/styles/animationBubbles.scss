@@ -1,0 +1,50 @@
+/* Conteneur des particules */
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1; /* Pour être en arrière-plan */
+  pointer-events: none; /* Ignore les clics */
+}
+
+/* Style des particules */
+.particle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: rgb(253, 255, 159); /* Jaune pastel avec opacité */
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: float 15s infinite ease-in-out;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+}
+
+/* Animation de mouvement spatial aléatoire */
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(var(--x-offset), var(--y-offset)) scale(1.1);
+  }
+  50% {
+    transform: translate(calc(var(--x-offset) * -1), calc(var(--y-offset) * 1.5)) scale(0.9);
+  }
+  75% {
+    transform: translate(calc(var(--x-offset) * 1.5), calc(var(--y-offset) * -1.5)) scale(1.2);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+/* Style de particules aléatoires */
+.particle:nth-child(1) { top: 10%; left: 15%; animation-duration: 18s; }
+.particle:nth-child(2) { top: 25%; left: 70%; animation-duration: 22s; }
+.particle:nth-child(3) { top: 50%; left: 30%; animation-duration: 20s; }
+.particle:nth-child(4) { top: 75%; left: 80%; animation-duration: 26s; }
+.particle:nth-child(5) { top: 85%; left: 40%; animation-duration: 24s; }

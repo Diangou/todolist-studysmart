@@ -1,0 +1,543 @@
+/* Vue principale */
+body {
+  background-color: #fdfed5;
+}
+
+/* Mascotte */
+.mascotte-image {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 200px;
+  height: auto;
+  z-index: 5; /* Moins élevé que la modale et le fond */
+}
+
+
+.add-task-btn:hover {
+  background-color: #ffe761;
+}
+
+/* Style des tâches */
+.task {
+  background-color: #FDFF9F; /* Jaune pastel */
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px auto 40px auto;
+  max-width: 800px;
+  box-shadow:  
+  rgba(255, 223, 85, 0.2) 0 -25px 18px -14px inset, /* Jaune clair pour l'ombre intérieure */
+  rgba(255, 223, 85, 0.15) 0 1px 2px, 
+  rgba(255, 223, 85, 0.15) 0 2px 4px, 
+  rgba(255, 223, 85, 0.15) 0 4px 8px, 
+  rgba(255, 223, 85, 0.15) 0 8px 16px, 
+  rgba(255, 223, 85, 0.15) 0 16px 32px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  overflow: hidden;
+}
+
+
+
+/* Conteneur pour aligner les détails et actions de la tâche */
+.task-content {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-details {
+  flex-grow: 1;
+  min-width: 0; /* Important pour la troncature */
+  margin-right: 20px;
+  margin-left: 20px;
+
+}
+
+.task-details h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.task-details p {
+  margin: 5px 0;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Texte barré pour les tâches terminées */
+.task.completed .task-details h3 {
+  text-decoration: line-through;
+  color: grey;
+  background-color: #fdff9fb2;
+  opacity: 0.7;
+}
+
+.task.completed {
+  opacity: 0.7;
+}
+
+
+/* Boutons d'action pour modifier et supprimer */
+.task-actions {
+  display: flex;
+  align-items: center;
+}
+
+.task-actions button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  margin-top: 40px; /* Ajustez cette valeur pour descendre les icônes */
+
+}
+
+.task-actions img {
+  width: 25px; /* Remplacez par la largeur souhaitée */
+  height: auto; /* Remplacez par la hauteur souhaitée */
+  display: block; /* Empêche tout espacement indésirable autour de l'image */
+  margin: auto; /* Centrez l'image dans le bouton si nécessaire */
+}
+
+.task-actions button:first-child {
+  margin-right: 3px;
+}
+
+.task-actions button:hover {
+  transform: scale(1.06); /* Agrandit légèrement à 110% */
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.week-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.week-navigation h3 {
+  margin: 0 20px;
+  font-size: 1.5em;
+  white-space: nowrap; /* Empêche le texte de passer à la ligne */
+  min-width: 200px; /* Largeur minimale pour le texte */
+  text-align: center; /* Centrer le texte */
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 40px; /* Fixe la largeur des boutons */
+  text-align: center;
+  display: inline-block;
+}
+
+.nav-btn:hover {
+  transform: scale(1.2); /* Zoom à 120% au survol */
+}
+
+/* Ajouter une largeur fixe pour les boutons de réinitialisation */
+.reset-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+  margin-left: 20px; /* Espacement entre le bouton de réinitialisation et la date */
+  width: 40px;
+  text-align: center;
+}
+
+.week-navigation > * {
+  flex-grow: 0; /* Empêche les éléments de s'étirer */
+}
+
+/* Vue hebdomadaire */
+.week-view {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+/* Grille de la semaine */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+/* Colonne de chaque jour */
+.day-column {
+  background-color: #FFFA87;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow:  
+  rgba(255, 223, 85, 0.2) 0 -25px 18px -14px inset, /* Jaune clair pour l'ombre intérieure */
+  rgba(255, 223, 85, 0.15) 0 1px 2px, 
+  rgba(255, 223, 85, 0.15) 0 2px 4px, 
+  rgba(255, 223, 85, 0.15) 0 4px 8px, 
+  rgba(255, 223, 85, 0.15) 0 8px 16px, 
+  rgba(255, 223, 85, 0.15) 0 16px 32px; 
+}
+
+.day-column h3 {
+  text-align: center;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.day-column p {
+  text-align: center;
+  font-size: 0.85em;
+  margin-bottom: 10px;
+}
+
+
+/* Wrapper pour la vue hebdomadaire */
+.weekly-view {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  justify-items: center;
+}
+
+/* Conteneur spécifique pour chaque jour */
+.weekly-view .day-container {
+  background-color: #fffa87; /* Couleur de fond */
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 150px; /* Limiter la largeur pour éviter un texte trop large */
+  text-align: center;
+}
+
+/* Titres de jour */
+.weekly-view .day-container h3 {
+  font-size: 1.2em;
+  margin: 0;
+  padding: 5px 0;
+}
+
+/* Tâches en vue semaine */
+.weekly-view .task {
+  background-color: #FDFF9F;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  width: 95%;
+  max-width: 100%;
+  box-shadow:  
+  rgba(255, 223, 85, 0.2) 0 -25px 18px -14px inset, /* Jaune clair pour l'ombre intérieure */
+  rgba(255, 223, 85, 0.15) 0 1px 2px, 
+  rgba(255, 223, 85, 0.15) 0 2px 4px, 
+  rgba(255, 223, 85, 0.15) 0 4px 8px, 
+  rgba(255, 223, 85, 0.15) 0 8px 16px, 
+  rgba(255, 223, 85, 0.15) 0 16px 32px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.weekly-view .task-details { 
+  margin-left: 0;
+}
+
+
+/* Détails des tâches */
+.weekly-view .task h3,
+.weekly-view .task p {
+  font-size: 0.7em;
+  margin: 5px 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.weekly-view .task p {
+  font-size: 0.5em;
+  margin: 5px 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Boutons d'action en vue hebdomadaire */
+.weekly-view .task-actions button {
+  font-size: 0.2em;
+  padding: 1px;
+  margin: 0 1px;
+  margin-top: 40px; /* Ajustez cette valeur pour descendre les icônes */
+
+}
+
+
+.weekly-view .task-actions img {
+  width: 15px; /* Remplacez par la largeur souhaitée */
+  height: auto; /* Remplacez par la hauteur souhaitée */
+  display: block; /* Empêche tout espacement indésirable autour de l'image */
+  margin: auto; /* Centrez l'image dans le bouton si nécessaire */
+}
+
+.weekly-view .task-actions {
+  margin-left: -10px;
+}
+
+.weekly-view .checkbox-wrapper-26 label {
+  --size: 25px; /* Taille réduite uniquement pour la vue semaine */
+  margin-right: 8px;
+}
+.weekly-view .checkbox-wrapper-26 input[type="checkbox"] {
+  width: 5px;
+  height: 5px;
+  margin-right: 5px;
+  margin-left: 3px;
+}
+
+/* Boutons de bascule pour les vues */
+.view-mode-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.view-mode-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #FDFF9F;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.view-mode-buttons button.active {
+  background-color: #ffca3a;
+}
+
+.view-mode-buttons button:hover {
+  background-color: #ffca3a;
+}
+
+/* Arrière-plan flouté pour le pop-up */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3); /* Fond semi-transparent */
+  backdrop-filter: blur(5px); /* Effet de flou */
+  z-index: 10;
+  display: none; /* Masqué par défaut */
+}
+
+/* Pop-up de tâche */
+.task-form-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fdff9f00;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 20; /* Assurez-vous que le pop-up est au-dessus de l’arrière-plan flou */
+  width: 80%;
+  max-width: 500px;
+  display: none;
+}
+
+/* Classe pour afficher le pop-up et le fond flouté */
+.show-modal .modal-overlay,
+.show-modal .task-form-container {
+  display: block;
+}
+
+.radio-wrapper-19 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  margin-top: 50px;
+}
+
+.radio-inputs-19 {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 0.6rem;
+  background-color: #FDFF9F;
+  box-sizing: border-box;
+  box-shadow: 
+    rgba(255, 223, 85, 0.2) 0 -25px 18px -14px inset, 
+    rgba(255, 223, 85, 0.15) 0 1px 2px, 
+    rgba(255, 223, 85, 0.15) 0 2px 4px, 
+    rgba(255, 223, 85, 0.15) 0 4px 8px, 
+    rgba(255, 223, 85, 0.15) 0 8px 16px, 
+    rgba(255, 223, 85, 0.15) 0 16px 32px; 
+  padding: 0.25rem;
+  width: 130px; /* Largeur réduite */
+  height: 35px; /* Hauteur ajustée */
+  font-size: 12px;
+  transition: all 250ms;
+}
+
+.radio-inputs-19 label {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.radio-inputs-19 label input {
+  display: none;
+}
+
+.radio-inputs-19 label .name {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.25rem 0; /* Réduction de la hauteur du padding */
+  color: rgb(0, 0, 0);
+  transition: all 0.15s ease-in-out;
+}
+
+.radio-inputs-19 label input:checked + .name {
+  background-color: #fdfed5;
+  font-weight: 500;
+}
+
+/* Effet au survol */
+.radio-inputs-19:hover {
+  box-shadow: 
+    rgba(255, 223, 85, 0.35) 0 -25px 18px -14px inset, 
+    rgba(255, 223, 85, 0.25) 0 1px 2px, 
+    rgba(255, 223, 85, 0.25) 0 2px 4px, 
+    rgba(255, 223, 85, 0.25) 0 4px 8px, 
+    rgba(255, 223, 85, 0.25) 0 8px 16px, 
+    rgba(255, 223, 85, 0.25) 0 16px 32px;
+  transform: scale(1.05);
+}
+
+
+/* CSS */
+.button-33 {
+  background-color: #fdff9f;
+  border-radius: 10px;
+  box-shadow:  
+  rgba(255, 223, 85, 0.2) 0 -25px 18px -14px inset, /* Jaune clair pour l'ombre intérieure */
+  rgba(255, 223, 85, 0.15) 0 1px 2px, 
+  rgba(255, 223, 85, 0.15) 0 2px 4px, 
+  rgba(255, 223, 85, 0.15) 0 4px 8px, 
+  rgba(255, 223, 85, 0.15) 0 8px 16px, 
+  rgba(255, 223, 85, 0.15) 0 16px 32px; 
+  color: rgb(0, 0, 0);
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 830px;
+  height: 40px; 
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.button-33:hover {
+  box-shadow: 
+  rgba(255, 223, 85, 0.35) 0 -25px 18px -14px inset, /* Jaune accentué pour l'ombre intérieure au survol */
+    rgba(255, 223, 85, 0.25) 0 1px 2px, 
+    rgba(255, 223, 85, 0.25) 0 2px 4px, 
+    rgba(255, 223, 85, 0.25) 0 4px 8px, 
+    rgba(255, 223, 85, 0.25) 0 8px 16px, 
+    rgba(255, 223, 85, 0.25) 0 16px 32px;
+  transform: scale(1.05) ;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ajustez cette hauteur en fonction de votre conteneur */
+}
+
+
+/* CSS */
+.button-32 {
+  background-color: #FDFF9F;
+  border-radius: 10px;
+  box-shadow:  
+  rgba(255, 223, 85, 0.2) 0 -25px 18px -14px inset, /* Jaune clair pour l'ombre intérieure */
+  rgba(255, 223, 85, 0.15) 0 1px 2px, 
+  rgba(255, 223, 85, 0.15) 0 2px 4px, 
+  rgba(255, 223, 85, 0.15) 0 4px 8px, 
+  rgba(255, 223, 85, 0.15) 0 8px 16px, 
+  rgba(255, 223, 85, 0.15) 0 16px 32px; 
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+}
+
+.button-32:hover {
+  box-shadow: 
+  rgba(255, 223, 85, 0.35) 0 -25px 18px -14px inset, /* Jaune accentué pour l'ombre intérieure au survol */
+    rgba(255, 223, 85, 0.25) 0 1px 2px, 
+    rgba(255, 223, 85, 0.25) 0 2px 4px, 
+    rgba(255, 223, 85, 0.25) 0 4px 8px, 
+    rgba(255, 223, 85, 0.25) 0 8px 16px, 
+    rgba(255, 223, 85, 0.25) 0 16px 32px;
+  transform: scale(1.05) ;
+}
+
+.reset-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #000000;
+  margin-left: 10px; /* Espace entre la flèche droite et le bouton de réinitialisation */
+  transition: color 0.3s;
+  margin-left: 20px; /* Espacement entre le bouton de réinitialisation et la date */
+  transition: transform 0.2s ease; /* Transition pour un zoom fluide */
+
+}
+
+.reset-btn:hover {
+  transform: scale(1.2); /* Zoom à 120% au survol */
+}
